@@ -66,7 +66,10 @@ public class Mcs {
 
     public void showPlaylist(){
         for(int i=0; i<PLAYLISTS_CREATED; i++){
-           System.out.println(aPlaylist[i].playlistToString());
+           if(aPlaylist[i]!=null){
+            System.out.println(aPlaylist[i].playlistToString());
+           }
+           
         }
 
     }
