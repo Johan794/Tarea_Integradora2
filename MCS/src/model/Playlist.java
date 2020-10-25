@@ -53,6 +53,7 @@ public class Playlist {
            if(songs[i]==null){
                songs[i]= theSong;
                out=true;
+               System.out.println("La cancion fue añadida exitosamente");
            }
 
        }

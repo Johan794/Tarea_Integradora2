@@ -31,15 +31,16 @@ public class Main{
      public int menu(){
             int election=0;
             System.out.println(
-            "Bienvenido\n"+
+            "Este es el menu principal!\n"+
             "¿Que desea hacer hoy?\n" +
-            "[0] Nada\n"+
             "[1] Quiero crear un usuario\n"+
             "[2] Quiero agregar una cancion al pool\n"+
             "[3] Quiero crear una playlist\n"+
             "[4] Quiero ver a los usuarios Registrados\n"+
             "[5] Quiero ver las playlist\n"+
-            "[6] Quiero ver las canciones del pool"
+            "[6] Quiero ver las canciones del pool\n"+
+            "[7] Quiero agregar una cancion\n"+
+            "[0] Nada"
             );
             election= sc.nextInt();
             return election;
@@ -80,8 +81,7 @@ public class Main{
                          System.out.println("Ingrese el genero de la cancion");
                               songGender=sc.nextLine();
                           System.out.println("Ingrese la duracion de la cancion minutos:segundos");
-                          System.out.print("+");
-                                minutes=sc.nextInt();
+                          System.out.print(minutes=sc.nextInt()); 
                           System.out.print(":");
                               seconds=sc.nextInt();      
                           myMcs.addTopool(nameSong, nameArtist, date, songGender, minutes, seconds);
@@ -91,11 +91,15 @@ public class Main{
                        }while(choose.equals("si"));
                             break;
 
-               case 3:  String playlistName;
+               case 3:  String playlistName, typeOfplaylist, creatorName;
                         sc.nextLine();
                         System.out.println("Ingrese el nombre de la playlist");
                               playlistName=sc.nextLine();   
-                        myMcs.CratePlaylist(playlistName);
+                        System.out.println("Ingrese el tipo playlist que dese crear"); 
+                              typeOfplaylist=sc.nextLine(); 
+                        System.out.println("Para terminar por favor confirme su Nickname");
+                               creatorName=sc.nextLine();
+                        myMcs.CratePlaylist(playlistName,typeOfplaylist,creatorName);
                         break;
 
                case 4: myMcs.showUsers();
@@ -104,6 +108,18 @@ public class Main{
                         break;
                 case 6: myMcs.showSongs();
                         break;
+
+               case 7: sc.nextLine();
+                       int pListIndex, nameIndex;
+                       System.out.println("Ingrese el numero de la cancion que quiere agregar");   
+                                    nameIndex=sc.nextInt();            
+                       System.out.println("Por favor ingrese numero de la playlist a la que quiere agregar la cancion");
+                                    pListIndex=sc.nextInt();         
+                        myMcs.addToPlaylist(pListIndex, nameIndex);
+                        break;           
+
+                       
+
 
     
            }

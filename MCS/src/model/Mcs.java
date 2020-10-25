@@ -1,6 +1,5 @@
 package model;
 
-
 public class Mcs {
     //Constants to define the length of the arrays that will be used
 
@@ -20,35 +19,72 @@ public class Mcs {
         aPlaylist = new Playlist[PLAYLISTS_CREATED];
     }
      //metodo para crear playlist
-    public void CratePlaylist(String playlistName){
+    public void CratePlaylist(String playlistName, String typeOfplaylist, String creatorName){
         boolean out= false;
-        Playlist thePlaylist= new Playlist(playlistName);
-        for(int i=0; i<PLAYLISTS_CREATED && out !=true; i++ ){
-            if(aPlaylist[i]==null){
-                aPlaylist[i]=thePlaylist;
+        int creatorIndex=0;
+        for(int i=0; i<MAX_USERS && out!=true; i++){
+            if((aUser[i].getNickmane()).equals(creatorName)){
+                creatorIndex=i;
                 out=true;
-                System.out.println("la playlist se ha creado!");
             }
         }
+           out=false;
+        switch(typeOfplaylist.toUpperCase()){
+            case "PRIVATE": Private_playlist pPlaylist= new Private_playlist(playlistName);
+                            for(int i=0; i<PLAYLISTS_CREATED && out !=true; i++ ){
+                                     if(aPlaylist[i]==null){
+                                          aPlaylist[i] = pPlaylist;
+                                          pPlaylist.setMyuser(aUser[creatorIndex]);
+                                          out=true;
+                                          System.out.println("la playlist PRIVADA se ha creado!");
+                                         }
+                                     }
+                                    break;
+            case "PUBLIC": Public_playlist thePlaylist= new Public_playlist(playlistName);
+                            for(int i=0; i<PLAYLISTS_CREATED && out !=true; i++ ){
+                                  if(aPlaylist[i]==null){
+                                   aPlaylist[i] = thePlaylist;
+                                     out=true;
+                                    System.out.println("la playlist PUBLICA ha creado!");
+                                       }
+                                 }
+                                    break;
+            case "RESTRICTED":Restricted_playlist rPlaylist= new Restricted_playlist(playlistName);
+                                  for(int i=0; i<PLAYLISTS_CREATED && out !=true; i++ ){
+                                  if(aPlaylist[i]==null){
+                                    aPlaylist[i] = rPlaylist;
+                                    rPlaylist.setMyUsers(aUser[creatorIndex]);
+                                     out=true;
+                                  System.out.println("la playlist RESTRINGIDA se ha creado!");
+                                            }
+                                       }
+                             break;
+        }
+        
         
     }
     
     //metodo para crear canciones y agregarlas al pool 
     public void addTopool(String nameSong, String nameArtist, String date, String songGender, int minutes , int seconds ){
-        int sharedSongs=0;
+        int sharedSongs=0;       
         boolean space = false; 
         Song newSong = new Song(nameSong, nameArtist, date, songGender, minutes, seconds);
         for(int i= 0; i<SONGS_SHARED && space != true; i++){
             if(poolOfSongs[i] == null){
                 poolOfSongs[i]=newSong;
+                sharedSongs=aUser[i].getSharedsongs();
                 sharedSongs+=1;
+                aUser[i].setSharedSongs(sharedSongs);
                 aUser[i].setCategory(sharedSongs);
                 space=true;
-
+                System.out.println("La cancion se ha creado y ha sido agregada al pool ");
            }
         }
-        System.out.println("La cancion se ha creado y ha sido agregada al pool ");
+        
     }
+     public void addToPlaylist(int pListIndex, int nameIndex){
+         aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
+     }
      
     //metodo para crear un usuario
     public void CreateUser(String nickname, String password, int age){
@@ -69,11 +105,9 @@ public class Mcs {
            if(aPlaylist[i]!=null){
             System.out.println(aPlaylist[i].playlistToString());
            }
+        }
            
         }
-
-    }
-
     public void showUsers(){
         for(int i= 0; i<MAX_USERS; i++){
             System.out.println( "*************  User **************\n"+
@@ -99,33 +133,20 @@ public class Mcs {
      } 
 
     //metodo que valida el acceso a una playlist
-    /** 
-     * implementar cuando se complete la herencia
-    public boolean accesToplaylist(String pName){
+   /** public boolean accesToplaylist(String pName){
         String nplaylist="";
         Playlist listplaylist[]= getAPlaylist();
         boolean access = false;
         for(int i= 0; i<PLAYLISTS_CREATED; i++){
             nplaylist= listplaylist
-
             if(pName.equals()){
 
             }
-        }
-        
-        
-        return access;
+        }       return access;
+    }*/
+    
+    
 
-    }
-    **/
-
-     //una mausque herramienta que nos servira mas tarde :v
-    public Song[] getPoolOfSongs(){
-        return poolOfSongs;
-    }
-
-    public Playlist[] getAPlaylist(){
-        return aPlaylist;
-    }
+     
 
 }

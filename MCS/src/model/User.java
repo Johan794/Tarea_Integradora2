@@ -5,6 +5,7 @@ public class User {
     private String nickname;
     private String userPassword;
     private int userAge;
+    private int sharedSongs;
 
     //Relationships with other entities
     private Category aCategory;
@@ -15,6 +16,7 @@ public class User {
         this.nickname= nickname;
         this.userPassword= userPassword;
         this.userAge= userAge;
+        this.sharedSongs=sharedSongs;
     }
     //actualiza la categoria de un usuario
     public void setCategory(int sharedSongs){
@@ -32,6 +34,16 @@ public class User {
     }
 
     //metodos getters y setters
+
+    public int getSharedsongs(){
+        return sharedSongs;
+    }
+
+    public void setSharedSongs(int newSharedSongs){
+        this.sharedSongs= newSharedSongs;
+    }
+
+
     public String getNickmane(){
         return nickname;
     }
