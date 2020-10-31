@@ -9,6 +9,16 @@ public class Public_playlist extends Playlist {
      this.rate=rate;
  }
 
+  public void setRate(double aRate){
+      boolean out=false;
+      for(int i=0; i<rate.length && out!=true; i++){
+          if(rate[i]==0.0){
+              rate[i]=aRate;
+              out=true;
+          }
+      }
+  }
+
  public double rateAverage(){
      double average=0;
      for(int i=0; i<CALCIFICATION; i++){
@@ -18,6 +28,18 @@ public class Public_playlist extends Playlist {
      }
      return average/CALCIFICATION;
  }
+
+ @Override
+    public String playlistToString(){
+        String info="";
+        info= "**************  Playlist **************\n"+
+              "**  Title: "+getName()+"\n"+
+              "**  Duration: "+getPlaylistDuration()+"\n"+
+              "** Gender: "+genderUpdate()+"\n"+
+              "** Current rate of the playlist: "+rateAverage()+"\n"+
+              "***********************************";
+        return info;
+    }
 
     
 }

@@ -15,5 +15,16 @@ public class Private_playlist extends Playlist{
     public User getMyuUser(){
         return myUser;
     }
+    @Override
+    public String playlistToString(){
+        String info="";
+        info= "**************  Playlist **************\n"+
+              "**  Title: "+getName()+"\n"+
+              "**  Duration: "+getPlaylistDuration()+"\n"+
+              "** Gender: "+genderUpdate()+"\n"+
+              "** User with acces: "+myUser.getNickmane()+"\n"+
+              "***********************************";
+        return info;
+    }
     
 }

@@ -3,7 +3,7 @@ package model;
 public class Mcs {
     //Constants to define the length of the arrays that will be used
 
-    public static final int MAX_USERS= 2;
+    public static final int MAX_USERS= 5;
     public static final int SONGS_SHARED= 2;
     public static final int PLAYLISTS_CREATED= 2;
 
@@ -18,7 +18,14 @@ public class Mcs {
         poolOfSongs = new Song[SONGS_SHARED];
         aPlaylist = new Playlist[PLAYLISTS_CREATED];
     }
+
      //metodo para crear playlist
+     /**
+      * 
+      * @param playlistName
+      * @param typeOfplaylist
+      * @param creatorName
+      */
     public void CratePlaylist(String playlistName, String typeOfplaylist, String creatorName){
         boolean out= false;
         int creatorIndex=0;
@@ -65,6 +72,15 @@ public class Mcs {
     }
     
     //metodo para crear canciones y agregarlas al pool 
+    /**
+     * 
+     * @param nameSong
+     * @param nameArtist
+     * @param date
+     * @param songGender
+     * @param minutes
+     * @param seconds
+     */
     public void addTopool(String nameSong, String nameArtist, String date, String songGender, int minutes , int seconds ){
         int sharedSongs=0;       
         boolean space = false; 
@@ -82,11 +98,22 @@ public class Mcs {
         }
         
     }
-     public void addToPlaylist(int pListIndex, int nameIndex){
+     /**
+      * 
+      * @param pListIndex
+      * @param nameIndex
+      */
+     public void addSongToPlaylist(int pListIndex, int nameIndex){
          aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
      }
      
     //metodo para crear un usuario
+    /**
+     * 
+     * @param nickname
+     * @param password
+     * @param age
+     */
     public void CreateUser(String nickname, String password, int age){
         boolean out2= false;
         User newUser = new User(nickname, password, age);
@@ -99,7 +126,10 @@ public class Mcs {
         System.out.println("el usuario se ha creado");
 
     }
-
+     
+    /**
+     * 
+     */
     public void showPlaylist(){
         for(int i=0; i<PLAYLISTS_CREATED; i++){
            if(aPlaylist[i]!=null){
@@ -132,18 +162,14 @@ public class Mcs {
          }
      } 
 
-    //metodo que valida el acceso a una playlist
-   /** public boolean accesToplaylist(String pName){
-        String nplaylist="";
-        Playlist listplaylist[]= getAPlaylist();
-        boolean access = false;
-        for(int i= 0; i<PLAYLISTS_CREATED; i++){
-            nplaylist= listplaylist
-            if(pName.equals()){
-
-            }
-        }       return access;
-    }*/
+   /**
+    * public boolean accesToplaylist(String pName){
+       boolean access=false;
+        
+        
+        return access;
+    }
+    */ //metodo que valida el acceso a una playlist, hacerlo al final 
     
     
 

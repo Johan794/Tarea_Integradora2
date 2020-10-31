@@ -70,7 +70,7 @@ public class Main{
                case 2:  
                        do{
                         String nameSong, nameArtist, date, songGender;
-                        int minutes, seconds;
+                        int minutes, seconds, response;
                         sc.nextLine();
                         System.out.println("Ingrese el nombre de la cancion");
                             nameSong=sc.nextLine();
@@ -78,8 +78,16 @@ public class Main{
                               nameArtist=sc.nextLine();       
                          System.out.println("Ingrese la fecha de lansamiento de la cancion");
                             date=sc.nextLine();
-                         System.out.println("Ingrese el genero de la cancion");
-                              songGender=sc.nextLine();
+                         System.out.println("Ingrese el numero que corresponde al genero de la cancion \n"+
+                                             "[1] ROCK"+
+                                             "[2] HIPHOP"+
+                                             "[3] CLASSIC"+
+                                             "[4] REGGAE"+
+                                             "[5] SALSA"+
+                                             "[6] METAL"
+                         );
+                              response=sc.nextInt();
+                              songGender=chooseGender(response);
                           System.out.println("Ingrese la duracion de la cancion minutos:segundos");
                           System.out.print(minutes=sc.nextInt()); 
                           System.out.print(":");
@@ -87,16 +95,24 @@ public class Main{
                           myMcs.addTopool(nameSong, nameArtist, date, songGender, minutes, seconds);
                                sc.nextLine();
                            System.out.println("¿Desea añadir otra cancion?");
-                               choose=sc.nextLine();   
+                               choose=sc.nextLine();
+                               sc.nextLine();   
                        }while(choose.equals("si"));
                             break;
 
                case 3:  String playlistName, typeOfplaylist, creatorName;
+                        int response;
                         sc.nextLine();
                         System.out.println("Ingrese el nombre de la playlist");
                               playlistName=sc.nextLine();   
-                        System.out.println("Ingrese el tipo playlist que dese crear"); 
-                              typeOfplaylist=sc.nextLine(); 
+                        System.out.println("Ingrese el numero que indica el tipo playlist que desea crear \n"+
+                                            "[1] private \n"+
+                                            "[2] public \n"+
+                                            "[3] restricted"                   
+                        ); 
+                                response=sc.nextInt();
+                                typeOfplaylist=choosePlaylist(response);
+                        sc.nextLine();                
                         System.out.println("Para terminar por favor confirme su Nickname");
                                creatorName=sc.nextLine();
                         myMcs.CratePlaylist(playlistName,typeOfplaylist,creatorName);
@@ -115,7 +131,7 @@ public class Main{
                                     nameIndex=sc.nextInt();            
                        System.out.println("Por favor ingrese numero de la playlist a la que quiere agregar la cancion");
                                     pListIndex=sc.nextInt();         
-                        myMcs.addToPlaylist(pListIndex, nameIndex);
+                        myMcs.addSongToPlaylist(pListIndex, nameIndex);
                         break;           
 
                        
@@ -125,6 +141,43 @@ public class Main{
            }
     
         }
+
+      public String chooseGender(int response){
+         String genderSetted="";
+        switch(response){
+            case 1: genderSetted="ROCK";
+                     break;
+            case 2: genderSetted = "HIPHOP";
+                     break;
+            case 3: genderSetted= "CLASSIC";
+                     break;
+            case 4: genderSetted = "REGGAE";
+                     break;
+            case 5: genderSetted = "SALSA";
+                     break;
+            case 6: genderSetted = "METAL";
+                     break;
+
+        }
+         return genderSetted;
+
+      }  
+
+      public String choosePlaylist(int response){
+          String typeChoosen="";
+          switch(response){
+              case 1: typeChoosen="private";
+                       break;
+              case 2: typeChoosen= "public";
+                       break;
+              case 3: typeChoosen="restricted";
+                       break;
+          }
+
+          return typeChoosen;
+
+
+      }
 
 
  }
