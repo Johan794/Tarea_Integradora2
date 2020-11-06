@@ -11,9 +11,9 @@ public class Playlist {
     //constructor
     public Playlist(String name){
         this.name= name;
-        this.playlistGender=  new Gender[30];
+        this.playlistGender=  new Gender[5];
         this.playlistDuration= new MusicTime(0,0);
-        this.songs= new Song[30];
+        this.songs= new Song[5];
         
     }
 
@@ -21,7 +21,10 @@ public class Playlist {
        return name;
 
    }
-   public void setPlaylistDuration(int minutes, int seconds){
+   
+   public void setPlaylistDuration( MusicTime songDuration){
+       int minutes= songDuration.getMinutes();
+       int seconds=songDuration.getSeconds();
        this.playlistDuration.setMinutes(minutes);
        this.playlistDuration.setSeconds(seconds);
 
@@ -37,8 +40,8 @@ public class Playlist {
        String info="";
        info= "**************  Playlist **************\n"+
              "**  Title: "+name+"\n"+
-             "**  Duration: "+getPlaylistDuration()+"\n"+
-             "** Gender: "+genderUpdate()+"\n"+
+             "**  Duration: "+currentDuration()+"\n"+
+             "** Gender: "+currentGender()+"\n"+
              "***********************************";
        return info;
    }
@@ -63,38 +66,70 @@ public class Playlist {
         for(int i=0; i<songs.length && in!=true; i++){
               if(playlistGender[i]==null){
                   playlistGender[i]=aGender;
-                  in=true;      
+                  in=true;
+                  System.out.println("check");      
               }      
         }
         
 
     }
+    /**
+     *    
+     * //modificar para que no se repita
+   public void genderUpdate(){
+       boolean clean=false;
+       for(int i=0; i<songs.length && clean!=true; i++){
+        if((songs[i].getGender())==playlistGender[i]){
+            playlistGender[i]=null;
+            System.out.println("ya no hay repetidos");
+            clean=true;
+                       }
 
-   public String genderUpdate(){
-       boolean out=false;
-       String update="";
-       for(int i=0; i<songs.length && out!=true; i++){
-                if(songs[i]==null){
-                    update="UNKNOWN";
-                    out=true;
-                }else{
-                    if(playlistGender[i]!=null){
-                        if((songs[i].getGender())==playlistGender[i]){
-                            playlistGender[i]=null;
-                        }                                           
-                        update+=playlistGender[i].toString()+",";
-                        out=true; 
-                    }
-        
-                }
-                
        }
-       
-       return update;
+    }
+ 
+     */
+   
+   public String currentGender(){
+      //boolean out=true;
+      String update="";
+      for(int i=0; i<songs.length; i++){
+            if(songs[i]==null && update.equals("")){
+                update="UNKNOWN";
+                //out=true;
+                System.out.println("Si ves esto la cosa sigue null");
+            }
+            if(playlistGender[i]!=null){
+                System.out.println("Se supone que funciona");
+                update+=playlistGender[i].toString()+",";
+                System.out.println("se almaceno");      
+                }
+          
+       }
 
+      return update;
+   }
+    
+
+   public String currentDuration(){
+       String update="";
+       int minutes, seconds;
+       int resultconvertion, value_m, value_s;
+       minutes=playlistDuration.getMinutes();
+       seconds=playlistDuration.getSeconds();
+       minutes=minutes*60;
+       seconds+=minutes;
+       value_s=seconds%60;
+       resultconvertion=seconds/60;
+       value_m= resultconvertion%60;
+       update= value_m+":"+value_s;
+       //System.out.println(update);
+       return update;
    }
 
 
+  
+   
 
 
     

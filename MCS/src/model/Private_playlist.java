@@ -20,8 +20,8 @@ public class Private_playlist extends Playlist{
         String info="";
         info= "**************  Playlist **************\n"+
               "**  Title: "+getName()+"\n"+
-              "**  Duration: "+getPlaylistDuration()+"\n"+
-              "** Gender: "+genderUpdate()+"\n"+
+              "**  Duration: "+currentDuration()+"\n"+
+              "** Gender: "+currentGender()+"\n"+
               "** User with acces: "+myUser.getNickmane()+"\n"+
               "***********************************";
         return info;

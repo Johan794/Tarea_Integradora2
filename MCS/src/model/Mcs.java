@@ -1,10 +1,11 @@
 package model;
 
+// y dar el acceso a las personas de la playlist restringida
 public class Mcs {
     //Constants to define the length of the arrays that will be used
 
-    public static final int MAX_USERS= 5;
-    public static final int SONGS_SHARED= 2;
+    public static final int MAX_USERS= 2;
+    public static final int SONGS_SHARED= 5;
     public static final int PLAYLISTS_CREATED= 2;
 
     //relationships with other entities
@@ -43,7 +44,7 @@ public class Mcs {
                                           aPlaylist[i] = pPlaylist;
                                           pPlaylist.setMyuser(aUser[creatorIndex]);
                                           out=true;
-                                          System.out.println("la playlist PRIVADA se ha creado!");
+                                          System.out.println("la playlist PRIVADA "+pPlaylist.getName() +" se ha creado!");
                                          }
                                      }
                                     break;
@@ -52,7 +53,7 @@ public class Mcs {
                                   if(aPlaylist[i]==null){
                                    aPlaylist[i] = thePlaylist;
                                      out=true;
-                                    System.out.println("la playlist PUBLICA ha creado!");
+                                    System.out.println("la playlist PUBLICA "+thePlaylist.getName()+" ha creado!");
                                        }
                                  }
                                     break;
@@ -62,13 +63,110 @@ public class Mcs {
                                     aPlaylist[i] = rPlaylist;
                                     rPlaylist.setMyUsers(aUser[creatorIndex]);
                                      out=true;
-                                  System.out.println("la playlist RESTRINGIDA se ha creado!");
+                                  System.out.println("la playlist RESTRINGIDA "+rPlaylist.getName()+ " se ha creado!");
                                             }
                                        }
                              break;
         }
         
         
+    }
+
+    public String  playlistToChoose(int choose){
+         String list="";
+      switch(choose){
+          case 1: list+="Estas son las playlist privadas disponibles: \n";
+                for(int i=0; i<aPlaylist.length; i++){
+                      if(aPlaylist[i]!=null){
+                        if(aPlaylist[i] instanceof Private_playlist){
+                            list+="["+(i+1)+"]"+aPlaylist[i].getName()+"\n";
+                                  }
+                       
+                               }          
+          
+                 }break;
+
+            case 2: list+="Estas son las playlist publicas disponibles: \n";
+                   for(int i=0; i<aPlaylist.length; i++){
+                        if(aPlaylist[i]!=null){
+                            if(aPlaylist[i] instanceof Public_playlist){
+                                 list+="["+(i+1)+"]"+aPlaylist[i].getName()+"\n";
+                              }
+                   
+                           }          
+                       }break;
+            
+            case 3: list+="Estas son las playlist restringidas disponibles: \n";
+                    for(int i=0; i<aPlaylist.length; i++){
+                           if(aPlaylist[i]!=null){
+                               if(aPlaylist[i] instanceof Restricted_playlist){
+                                    list+="["+(i+1)+"]"+aPlaylist[i].getName()+"\n";
+                              }
+                   
+                           }          
+      
+                               }break;
+       }
+
+          if(list.equals("")){
+              list="No hay playlist creadas";
+          }
+
+          return list;
+       
+    }
+
+    public String songToChoose(){
+        String song="";
+        song+="Estas son las canciones que estan en el pool: \n";
+        for(int i=0; i<poolOfSongs.length; i++){
+            if(poolOfSongs[i]!=null){
+                song+="["+(i+1)+"]"+poolOfSongs[i].getTitlie()+"\n";    
+            }
+                    
+        }
+       
+        if(song.equals("Estas son las canciones que estan en el pool: \n")){
+            song="No hay canciones";
+        }
+
+        return song;
+
+
+    }
+    public void ratePublicPlaylist(double aRate, int index){
+        index=index-1;
+           if(aPlaylist[index]!=null){
+               if(aPlaylist[index] instanceof Public_playlist){
+                   Public_playlist ratePlaylist=(Public_playlist)aPlaylist[index];
+                   ratePlaylist.setRate(aRate);
+               }
+           }
+        
+
+    }
+
+    public void addUserToPlaylist( String user, int pListIndex){
+        boolean out=false;
+        int userIndex=0;
+        pListIndex=pListIndex-1;
+        for(int i=0; i<MAX_USERS && out!=true; i++){
+            if((aUser[i].getNickmane()).equals(user)){
+                userIndex=i;
+                out=true;
+            }
+        }
+        if(aUser[userIndex]!=null){
+            if(aPlaylist[pListIndex]!=null){
+                if(aPlaylist[pListIndex] instanceof Restricted_playlist){
+                    Restricted_playlist inPlaylist= (Restricted_playlist)aPlaylist[pListIndex];
+                    inPlaylist.setMyUsers(aUser[userIndex]);
+                    System.out.println("Check");
+                }
+
+            }
+        }
+
     }
     
     //metodo para crear canciones y agregarlas al pool 
@@ -81,17 +179,25 @@ public class Mcs {
      * @param minutes
      * @param seconds
      */
-    public void addTopool(String nameSong, String nameArtist, String date, String songGender, int minutes , int seconds ){
-        int sharedSongs=0;       
-        boolean space = false; 
+    public void addTopool(String nameSong, String nameArtist, String date, String songGender, int minutes , int seconds, String atentication){
+        int sharedSongs=0;  
+        int userIndex=0;     
+        boolean space = false;
+        for(int i=0; i<MAX_USERS && space!=true; i++){
+            if((aUser[i].getNickmane()).equals(atentication)){
+                userIndex=i;
+                space=true;
+            }
+        } 
+        space=false;
         Song newSong = new Song(nameSong, nameArtist, date, songGender, minutes, seconds);
         for(int i= 0; i<SONGS_SHARED && space != true; i++){
             if(poolOfSongs[i] == null){
                 poolOfSongs[i]=newSong;
-                sharedSongs=aUser[i].getSharedsongs();
+                sharedSongs=aUser[userIndex].getSharedsongs();
                 sharedSongs+=1;
-                aUser[i].setSharedSongs(sharedSongs);
-                aUser[i].setCategory(sharedSongs);
+                aUser[userIndex].setSharedSongs(sharedSongs);
+                aUser[userIndex].setCategory(sharedSongs);
                 space=true;
                 System.out.println("La cancion se ha creado y ha sido agregada al pool ");
            }
@@ -104,8 +210,16 @@ public class Mcs {
       * @param nameIndex
       */
      public void addSongToPlaylist(int pListIndex, int nameIndex){
-         aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
-     }
+         pListIndex=pListIndex-1;
+         nameIndex=nameIndex-1;
+         if(poolOfSongs[nameIndex] !=null){
+            aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
+         }
+         aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);   
+       }  
+     
+         
+     
      
     //metodo para crear un usuario
     /**
@@ -120,46 +234,61 @@ public class Mcs {
         for(int i=0; i<MAX_USERS && out2!=true; i++){
             if(aUser[i]==null){
                 aUser[i]=newUser;
+                System.out.println("el usuario se ha creado");
                 out2=true;
             }
         }
-        System.out.println("el usuario se ha creado");
+        
 
     }
      
-    /**
-     * 
-     */
-    public void showPlaylist(){
+    
+    public String showPlaylist(){
+        String currentPlaylist="";
         for(int i=0; i<PLAYLISTS_CREATED; i++){
            if(aPlaylist[i]!=null){
-            System.out.println(aPlaylist[i].playlistToString());
+            currentPlaylist+=aPlaylist[i].playlistToString()+"\n";
            }
         }
-           
-        }
-    public void showUsers(){
-        for(int i= 0; i<MAX_USERS; i++){
-            System.out.println( "*************  User **************\n"+
-                                "**  UserName: "+aUser[i].getNickmane()+"\n"+
-                                "**  Age: "+aUser[i].getUserAge()+"\n"+
-                                "**  Category: "+aUser[i].getCategory()+"\n"+
-                                "***********************************" 
-            );
-        }
+          return currentPlaylist;
     }
 
-     public void showSongs(){
-         for(int i=0; i<SONGS_SHARED; i++){
-             System.out.println( "**************  Song **************\n"+
-                                 "**  Title: "+poolOfSongs[i].getTitlie()+"\n"+
-                                 "**  Artist: "+poolOfSongs[i].getNameArtist()+"\n"+
-                                 "**  Duration: "+poolOfSongs[i].getSongDuration()+"\n"+
-                                 "**  Gender: "+poolOfSongs[i].getGender()+"\n"+
-                                 "***********************************"
-             );
+    public String showUsers(){
+        String currentUsers="";
+        for(int i= 0; i<MAX_USERS; i++){
+            if(aUser[i]!=null){
+                currentUsers+=aUser[i].userInfo()+"\n";                                   
+            }
+            
+        }
 
+        if(currentUsers.equals("")){
+            currentUsers="No hay usuarios";
+        }
+
+        return currentUsers;
+    }
+
+     public String showSongs(){
+         String currentSong="";
+         for(int i=0; i<SONGS_SHARED; i++){
+             if(poolOfSongs[i]!=null){
+                        currentSong+= "**************  Song **************\n"+
+                                      "**  Title: "+poolOfSongs[i].getTitlie()+"\n"+
+                                      "**  Artist: "+poolOfSongs[i].getNameArtist()+"\n"+
+                                      "**  Duration: "+poolOfSongs[i].getformatDuration() +"\n"+
+                                      "**  Gender: "+poolOfSongs[i].getGender()+"\n"+
+                                      "***********************************\n";
+                                    
+             }
          }
+
+         if(currentSong.equals("")){
+             currentSong="No hay canciones";
+         }
+
+
+         return currentSong;
      } 
 
    /**

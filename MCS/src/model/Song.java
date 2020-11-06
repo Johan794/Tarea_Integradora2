@@ -16,8 +16,7 @@ public class Song {
         this.realaseDate= realaseDate;
         Gender newGender= Gender.valueOf(gender.toUpperCase());
         this.aGender= newGender;
-        songDuration= new MusicTime(minutes,seconds);
-        this.songDuration= songDuration;
+        this.songDuration= new MusicTime(minutes,seconds);
 
     }
 
@@ -25,10 +24,14 @@ public class Song {
         return aGender;
     }
 
-    public String getSongDuration(){
+    public String getformatDuration(){
         String sDuration="";
        sDuration=songDuration.giveFormatDuration();
        return sDuration;
+    }
+
+    public MusicTime getDuration(){
+        return songDuration;
     }
 
     public String getNameArtist(){

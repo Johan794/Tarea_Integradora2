@@ -16,7 +16,7 @@ public class User {
         this.nickname= nickname;
         this.userPassword= userPassword;
         this.userAge= userAge;
-        this.sharedSongs=sharedSongs;
+        this.sharedSongs=0;
     }
     //actualiza la categoria de un usuario
     public void setCategory(int sharedSongs){
@@ -52,10 +52,22 @@ public class User {
         return userAge;
     }
 
+
+    
     public Category getCategory(){
         return aCategory;
     }
 
+
+    public String userInfo(){
+        String info="";
+        info="*************  User **************\n"+
+        "**  UserName: "+nickname+"\n"+
+        "**  Age: "+userAge+"\n"+
+        "**  Category: "+aCategory+"\n"+
+        "***********************************";
+        return info;
+    }
 
 
 

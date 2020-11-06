@@ -3,31 +3,34 @@ package model;
 public class MusicTime {
     
 	//atributes
-    private int minutes;
-    private int seconds;
+    private int acumMinutes;
+    private int acumSeconds;
 
     public MusicTime(int minutes, int seconds) {
-        this.minutes=minutes;
-        this.seconds=seconds;
+        this.acumMinutes=minutes;
+        this.acumSeconds=seconds;
 	}
-
+    //eliminarlo si se acumula el tiempo de las canciones
 	public String giveFormatDuration() {
         String format="";
-        format= minutes+":"+seconds;
+        format= acumMinutes+":"+acumSeconds;
 		return format;
     }
-    
-    public String givePDuration(){
-        String duration ="";
-        return duration;
-
-    }
-     public void setMinutes(int newMinutes){
-         this.minutes=newMinutes;
+     
+    public void setMinutes(int newMinutes){
+         this.acumMinutes += newMinutes;
      }
 
      public void setSeconds(int newSeconds){
-         this.seconds= newSeconds;
+         this.acumSeconds+= newSeconds;
+     }
+
+     public int getMinutes(){
+         return acumMinutes;
+     }
+
+     public int getSeconds(){
+         return acumSeconds;
      }
 
     
