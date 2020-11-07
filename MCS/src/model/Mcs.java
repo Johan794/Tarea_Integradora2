@@ -1,12 +1,18 @@
 package model;
 
-// y dar el acceso a las personas de la playlist restringida
+/**
+ * description of class Mcs 
+ * this class helps the Main class to interact with the model classes and manage the functions of each object
+ * @author Johan Ricardo
+ * @version Final
+ */
+
 public class Mcs {
     //Constants to define the length of the arrays that will be used
 
-    public static final int MAX_USERS= 2;
-    public static final int SONGS_SHARED= 5;
-    public static final int PLAYLISTS_CREATED= 2;
+    public static final int MAX_USERS= 10;
+    public static final int SONGS_SHARED= 30;
+    public static final int PLAYLISTS_CREATED= 20;
 
     //relationships with other entities
     private User [] aUser;
@@ -14,29 +20,39 @@ public class Mcs {
     private Playlist [] aPlaylist;
     
     //Constructor
+    /**
+     * <b> Method: constructor method of the object Mcs <br>
+     * it creates an array on users , songs and playlist with its respective sizes <br>
+     * @param 
+     */
     public Mcs(){
         aUser = new User[MAX_USERS];
         poolOfSongs = new Song[SONGS_SHARED];
         aPlaylist = new Playlist[PLAYLISTS_CREATED];
     }
 
-     //metodo para crear playlist
+     
      /**
-      * 
-      * @param playlistName
-      * @param typeOfplaylist
-      * @param creatorName
+      * Method: CreatePlaylist: <br>
+      * this method crates a an object of the class Playlist and add it to the array aPlaylist[], the user can crate tre type of playlist Public , Private  or Restricted  <br>
+      * <b> pre: </b>  it requires a User created and added to the array aUser <br>
+      * <b> pos: </b>  it creates a playlist and add it to the array aPlaylist <br>
+      * @param playlistName , the name that the user will give to the playlist  
+      * @param typeOfplaylist , the type of playlist that the user has chosen, it could be PRIVATE , PUBLIC or RESTRICTED <br>
+      * @param creatorName , the name of the user for give him access to a playlist
       */
     public void CratePlaylist(String playlistName, String typeOfplaylist, String creatorName){
-        boolean out= false;
-        int creatorIndex=0;
+        boolean out= false; //this varibale  will help us to break the iteration when we find an space in the array or the index that matches with the name of the user
+        int creatorIndex=0; //it will help us to find the index in the array aUser that matches with the name of the user
+        //this iteration will find the index that matches with the name of the user 
         for(int i=0; i<MAX_USERS && out!=true; i++){
             if((aUser[i].getNickmane()).equals(creatorName)){
                 creatorIndex=i;
                 out=true;
             }
         }
-           out=false;
+           out=false; //we reset the varibale  for a new iteration
+         //it evaluates the election the user  
         switch(typeOfplaylist.toUpperCase()){
             case "PRIVATE": Private_playlist pPlaylist= new Private_playlist(playlistName);
                             for(int i=0; i<PLAYLISTS_CREATED && out !=true; i++ ){
@@ -71,7 +87,16 @@ public class Mcs {
         
         
     }
+    
 
+    /**
+     * Method: playlistToChoose <br>
+     * this method returns an string which hasa list of a type of playlist that the user has chosen before, let him choose a playlist to make an operation with one of those <br>
+     * <b> pre: <br>
+     * <b> pos: <br>
+     * @param choose , it represents the type of playlist that the user wants to see 
+     * @return String,  it returns and String with a list of playlist sorted by the type that the user chose
+     */
     public String  playlistToChoose(int choose){
          String list="";
       switch(choose){
@@ -116,6 +141,14 @@ public class Mcs {
        
     }
 
+    /**
+     * Method: songToChoose <br>
+     * this method returns an string which has a list of a songs that the user has created before, let him choose a song to add it to a playlist (this songs are already at pool of songs)<br>
+     * <b> pos: <br>
+     * <b> pre: <br>
+     * @return String , it returns a list with the songs 
+     */
+
     public String songToChoose(){
         String song="";
         song+="Estas son las canciones que estan en el pool: \n";
@@ -134,6 +167,14 @@ public class Mcs {
 
 
     }
+    /**
+     * Method: ratePublicPlaylist <br>
+     * this method let a user rate a public playlist <br>
+     * <b> pre: <br>
+     * <b> pos: the calification will be added to the array rate[] , which belongs to the class Public_playlist <br>
+     * @param aRate , the calcification that the user will give to a public playlist
+     * @param index , the position of the playlist that will be rated
+     */
     public void ratePublicPlaylist(double aRate, int index){
         index=index-1;
            if(aPlaylist[index]!=null){
@@ -145,7 +186,15 @@ public class Mcs {
         
 
     }
-
+     
+    /**
+     * Method: addUserToPlaylist <br>
+     * this method give an user access to a restricted playlist <br> 
+     * <b> pre: <br>
+     * <b> pos: </b>  a new user will be added to the array myUsers[], which belongs to the class Restricted_playlist <br>
+     * @param user , the name of the user for give him access to a playlist
+     * @param pListIndex , the position of the playlist that the user wants to give access
+     */
     public void addUserToPlaylist( String user, int pListIndex){
         boolean out=false;
         int userIndex=0;
@@ -161,7 +210,7 @@ public class Mcs {
                 if(aPlaylist[pListIndex] instanceof Restricted_playlist){
                     Restricted_playlist inPlaylist= (Restricted_playlist)aPlaylist[pListIndex];
                     inPlaylist.setMyUsers(aUser[userIndex]);
-                    System.out.println("Check");
+                    
                 }
 
             }
@@ -169,15 +218,18 @@ public class Mcs {
 
     }
     
-    //metodo para crear canciones y agregarlas al pool 
     /**
-     * 
-     * @param nameSong
-     * @param nameArtist
-     * @param date
-     * @param songGender
-     * @param minutes
-     * @param seconds
+     * Method: addTopool <br>
+     * this method creates a song and add it to the array poolOfSongs[] and update the category of a user <br>
+     * <b> pre: there must be an user in the array aUser[] <br>
+     * <b> pos: a new user will be added to the array aUser[] and the attribute sharedSongs will be updated <br>
+     * @param nameSong , the name of the song 
+     * @param nameArtist , the name of the artist
+     * @param date , the date that the song was realased
+     * @param songGender , the selection of one of the genders allowed
+     * @param minutes , the minutes of the song 
+     * @param seconds , the seconds of the song
+     * @param autentication  , the nickname of the user that created the song
      */
     public void addTopool(String nameSong, String nameArtist, String date, String songGender, int minutes , int seconds, String atentication){
         int sharedSongs=0;  
@@ -205,28 +257,35 @@ public class Mcs {
         
     }
      /**
-      * 
-      * @param pListIndex
-      * @param nameIndex
+      * Method: addSongToPlaylist <br>
+      * this method add song to a playlist and update the duration <br>
+      * <b> pre: </b> the array poolOfSongs[] must be different of null , poolOfSongs[] !=null 
+      * <b> pos:</b>  A song is added to the array songs[], which belongs to the class Playlist, and the duration of the playlist is set
+      * @param pListIndex , the position of the playlist that the user chose
+      * @param nameIndex ,  the position of the song that the user chose
       */
      public void addSongToPlaylist(int pListIndex, int nameIndex){
          pListIndex=pListIndex-1;
          nameIndex=nameIndex-1;
          if(poolOfSongs[nameIndex] !=null){
             aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
+            aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
+            
          }
-         aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);   
+           
        }  
      
          
      
      
-    //metodo para crear un usuario
+    
     /**
-     * 
-     * @param nickname
-     * @param password
-     * @param age
+     * Method: CreateUser <br>
+     * <b> pre: <br>
+     * <b> pos: a new user is added to the array aUser[] <br>
+     * @param nickname , the nickname of the user
+     * @param password , the password of the user
+     * @param age , the age of the user
      */
     public void CreateUser(String nickname, String password, int age){
         boolean out2= false;
@@ -242,6 +301,13 @@ public class Mcs {
 
     }
      
+
+    /**
+     * Method: showPlaylist
+     * <b> pre: <br>
+     * <b> pos:  <br>
+     * @return String , returns the information of all the playlist created in a specific format
+     */
     
     public String showPlaylist(){
         String currentPlaylist="";
@@ -252,7 +318,13 @@ public class Mcs {
         }
           return currentPlaylist;
     }
-
+    /**
+     * Method: showUsers <br>
+     * this method returns the information of a user in a String  with a specific format <br> 
+     * <b> pre: <br>
+     * <b> pos: <br> 
+     * @return String , returns the information of all the users created in a specific format
+     */
     public String showUsers(){
         String currentUsers="";
         for(int i= 0; i<MAX_USERS; i++){
@@ -268,7 +340,13 @@ public class Mcs {
 
         return currentUsers;
     }
-
+     /**
+      * Method: showSongs <br>
+      * this method returns the information of the playlists in a String  with a specific format <br> 
+      * <b> pre: <br>
+      * <b> pos: <br>
+      * @return String , returns the information of all the songs created in a specific format
+      */
      public String showSongs(){
          String currentSong="";
          for(int i=0; i<SONGS_SHARED; i++){
@@ -291,15 +369,7 @@ public class Mcs {
          return currentSong;
      } 
 
-   /**
-    * public boolean accesToplaylist(String pName){
-       boolean access=false;
-        
-        
-        return access;
-    }
-    */ //metodo que valida el acceso a una playlist, hacerlo al final 
-    
+   
     
 
      

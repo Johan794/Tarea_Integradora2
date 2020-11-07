@@ -6,10 +6,12 @@ public class Main{
     private Mcs myMcs;
     private Scanner sc;
 
+   
     public Main(){
         sc = new Scanner(System.in);
         myMcs = new Mcs();
     }
+
     public static void main(String args []){
         int election=0;
         Main ppal = new Main();
@@ -17,7 +19,7 @@ public class Main{
             election=ppal.menu();
            
             switch(election){
-                case 0: System.out.println("Adios!");
+                case 0: System.out.println("Gracias por usar Mcs!");
                           break;
                 default: ppal.operation(election);
                           break;
@@ -31,7 +33,7 @@ public class Main{
      public int menu(){
             int election=0;
             System.out.println(
-            "Este es el menu principal!\n"+
+            "*********Este es el menu principal!*****\n"+
             "¿Que desea hacer hoy?\n" +
             "[1] Quiero crear un usuario\n"+
             "[2] Quiero agregar una cancion al pool\n"+
@@ -42,7 +44,8 @@ public class Main{
             "[7] Quiero agregar una cancion a una playlist\n"+
             "[8] Quiero calificar una playlist publica \n"+
             "[9] Quiero darle acceso a un usuario a una playlist restringida \n"+
-            "[0] Nada"
+            "[0] Nada \n"+
+            "********************************************************************"
             );
             election= sc.nextInt();
             return election;
@@ -77,7 +80,7 @@ public class Main{
                             nameSong=sc.nextLine();
                          System.out.println("Ingrese el nombre del artista");
                               nameArtist=sc.nextLine();       
-                         System.out.println("Ingrese la fecha de lansamiento de la cancion");
+                         System.out.println("Ingrese la fecha de lansamiento de la cancion: dd/mm/aaa , en la misma linea ");
                             date=sc.nextLine();
                          System.out.println("Ingrese el numero que corresponde al genero de la cancion \n"+
                                              "[1] ROCK \n"+
@@ -97,6 +100,7 @@ public class Main{
                            System.out.println("para continuar por favor confirme su Nickname");
                                autentication=sc.nextLine(); 
                           myMcs.addTopool(nameSong, nameArtist, date, songGender, minutes, seconds,autentication);
+                           System.out.println("La cancion fue añadida exitosamente");
                            System.out.println("¿Desea añadir otra cancion? 1=si o 0=no");
                                choose=sc.nextInt();                                
                        }while(choose==1);
@@ -145,7 +149,7 @@ public class Main{
                         System.out.println("Por favor ingrese numero de la playlist a la que quiere agregar la cancion");
                                      pListIndex=sc.nextInt();         
                          myMcs.addSongToPlaylist(pListIndex, nameIndex);
-                         System.out.println("¿Desea añadir otra cancion a una playlist? 1=si o 0=no");
+                         System.out.println("¿Desea añadir otra cancion a una playlist? 1 = si o 0 = no");
                                  desition=sc.nextInt();
                        }while(desition==1);
                        

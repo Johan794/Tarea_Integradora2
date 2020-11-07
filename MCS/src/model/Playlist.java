@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * description of class Playlist 
+ * this class gives information about the  object playlist, updates its genre and duration
+ * @author Johan Ricardo
+ * @version  Final
+ */
 public class Playlist {
     //attributes
     private String name;
@@ -9,18 +15,25 @@ public class Playlist {
     private MusicTime playlistDuration;
     private Song []songs;
     //constructor
+
+    /**
+     * <b> Method: Constructor of the object Playlist
+     * @param name , the name that the user will give to the playlist
+     */
     public Playlist(String name){
         this.name= name;
-        this.playlistGender=  new Gender[5];
+        this.playlistGender=  new Gender[30];
         this.playlistDuration= new MusicTime(0,0);
-        this.songs= new Song[5];
+        this.songs= new Song[30];
         
     }
+
 
    public String getName(){
        return name;
 
    }
+   
    
    public void setPlaylistDuration( MusicTime songDuration){
        int minutes= songDuration.getMinutes();
@@ -29,12 +42,12 @@ public class Playlist {
        this.playlistDuration.setSeconds(seconds);
 
    }
-   public String getPlaylistDuration(){
-       String duration="";
-       duration=playlistDuration.giveFormatDuration();
-       return duration;
-   }
-
+  
+   /**
+    * Method: PlaylistToString <br>
+    * this method returns the information of the playlist in a String <br>
+    * @return String , the information of the playlist in a specific format 
+    */
    
    public String playlistToString(){
        String info="";
@@ -46,6 +59,14 @@ public class Playlist {
        return info;
    }
 
+   /**
+    * Method: addFromPool
+    * this method add a song from the array poolOfSongs[], of the class Mcs, to the array songs[] <br>
+    * <b> pre: <br>
+    * <b> pos: </b> a song is added tho the array song[] <br>
+    * @param theSong , the object song 
+    */
+
    public void addFromPool(Song theSong){
        boolean out=false;
        for(int i =0; i<songs.length && out!=true; i++){
@@ -53,14 +74,14 @@ public class Playlist {
                songs[i]= theSong;
                setPgender(songs[i].getGender());
                out=true;
-               System.out.println("La cancion fue añadida exitosamente");
+               
            }
 
        }
 
    }
 
-
+ 
     public void setPgender(Gender aGender){
         boolean in=false;
         for(int i=0; i<songs.length && in!=true; i++){
@@ -72,25 +93,42 @@ public class Playlist {
         }
         
 
-    }
-    /**
-     *    
-     * //modificar para que no se repita
-   public void genderUpdate(){
-       boolean clean=false;
-       for(int i=0; i<songs.length && clean!=true; i++){
-        if((songs[i].getGender())==playlistGender[i]){
-            playlistGender[i]=null;
-            System.out.println("ya no hay repetidos");
-            clean=true;
-                       }
-
-       }
+ 
     }
  
+    /**
+     * Method: cleanGender <br>
+     * this method eliminates the genders repeated at the array of genders playlistGender[] <br>
+     * 
      */
+    public void cleanGender(){
+        for(int i=0; i<playlistGender.length; i++){
+            if(songs[i]!=null && playlistGender[i]!=null){
+                for(int j=0; j<(playlistGender.length-1); j++){
+                    if(i!=j){                    
+                      if((songs[i].getGender())==playlistGender[j]){
+                                playlistGender[i]=null;
+                            }
+                    }
+                    
+                }
+            
+            }
+           
+                
+                     
+        }
+    }
    
+     
+   /**
+    * Method: current Gender <br>
+    * <b> pre: <br>
+    * <b> pos: </b> the gender of the playlist is updated <br>
+    * @return String , an String with the genders updated
+    */
    public String currentGender(){
+      cleanGender();
       //boolean out=true;
       String update="";
       for(int i=0; i<songs.length; i++){
@@ -100,7 +138,7 @@ public class Playlist {
                 System.out.println("Si ves esto la cosa sigue null");
             }
             if(playlistGender[i]!=null){
-                System.out.println("Se supone que funciona");
+                //System.out.println("Se supone que funciona");
                 update+=playlistGender[i].toString()+",";
                 System.out.println("se almaceno");      
                 }
@@ -110,6 +148,11 @@ public class Playlist {
       return update;
    }
     
+   /**
+    * Method: currentDuration <br>
+    * this method updates the duration of the playlist <br> 
+    * @return String with the duration updated
+    */
 
    public String currentDuration(){
        String update="";
