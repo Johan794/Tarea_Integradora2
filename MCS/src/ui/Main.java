@@ -163,6 +163,7 @@ public class Main{
                         System.out.println("Califique de 1 a 10 la playlist");
                            aRate=sc.nextDouble(); 
                         myMcs.ratePublicPlaylist(aRate, choose);
+                         break;
 
                 case 9:   String userAcces="";
                           System.out.println("Para proceder por favor escriba 3");
