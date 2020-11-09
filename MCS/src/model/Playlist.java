@@ -135,12 +135,12 @@ public class Playlist {
             if(songs[i]==null && update.equals("")){
                 update="UNKNOWN";
                 //out=true;
-                System.out.println("Si ves esto la cosa sigue null");
+                //System.out.println("Si ves esto la cosa sigue null");
             }
             if(playlistGender[i]!=null){
                 //System.out.println("Se supone que funciona");
                 update+=playlistGender[i].toString()+",";
-                System.out.println("se almaceno");      
+                //System.out.println("se almaceno");      
                 }
           
        }
