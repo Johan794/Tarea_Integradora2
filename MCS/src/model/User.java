@@ -12,6 +12,7 @@ public class User {
     private String userPassword;
     private int userAge;
     private int sharedSongs;
+    //private String dummie;
 
     //Relationships with other entities
     private Category aCategory;
@@ -24,12 +25,13 @@ public class User {
      * @param userAge , the age of the user 
      */
 
-    public User(String nickname, String userPassword, int userAge){
+    public User(String nickname, String userPassword, int userAge ){
         this.aCategory= Category.NEWBIE;
         this.nickname= nickname;
         this.userPassword= userPassword;
         this.userAge= userAge;
         this.sharedSongs=0;
+        //this.dummie= dummie;
     }
     
 

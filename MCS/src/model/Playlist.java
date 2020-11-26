@@ -6,7 +6,7 @@ package model;
  * @author Johan Ricardo
  * @version  Final
  */
-public class Playlist {
+public abstract class Playlist {
     //attributes
     private String name;
 
@@ -88,7 +88,7 @@ public class Playlist {
               if(playlistGender[i]==null){
                   playlistGender[i]=aGender;
                   in=true;
-                  System.out.println("check");      
+                  //System.out.println("check");      
               }      
         }
         

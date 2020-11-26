@@ -56,6 +56,7 @@ public class Main{
      public void operation(int election){
            switch(election){
                case 1: String nickname, password;
+                       //dummie="Hola";
                        int age, choose;
                         sc.nextLine();
                         System.out.println("Ingrese apodo del usuario");
@@ -122,6 +123,7 @@ public class Main{
                         System.out.println("Para terminar por favor confirme su Nickname");
                                creatorName=sc.nextLine();
                         myMcs.CratePlaylist(playlistName,typeOfplaylist,creatorName);
+                        System.out.println("La playlist de tipo "+typeOfplaylist.toUpperCase()+" con nombre "+playlistName.toUpperCase()+" ha sido creada");
                         break;
 
                case 4: System.out.println(myMcs.showUsers());
@@ -135,6 +137,7 @@ public class Main{
                case 7: //sc.nextLine();
                        int desition;
                        int pListIndex, nameIndex;
+                       String user;
                        do{
                         System.out.println(myMcs.songToChoose());
                         System.out.println("Ingrese el numero de la cancion que quiere agregar");   
@@ -147,8 +150,11 @@ public class Main{
                                choose=sc.nextInt(); 
                         System.out.println(myMcs.playlistToChoose(choose));                                       
                         System.out.println("Por favor ingrese numero de la playlist a la que quiere agregar la cancion");
-                                     pListIndex=sc.nextInt();         
-                         myMcs.addSongToPlaylist(pListIndex, nameIndex);
+                                     pListIndex=sc.nextInt();
+                            sc.nextLine();          
+                        System.out.println("para continuar por favor confirme su Nickname");
+                                     user=sc.nextLine();
+                           System.out.println(myMcs.addSongToPlaylist(pListIndex, nameIndex, user, choose));                
                          System.out.println("¿Desea añadir otra cancion a una playlist? 1 = si o 0 = no");
                                  desition=sc.nextInt();
                        }while(desition==1);

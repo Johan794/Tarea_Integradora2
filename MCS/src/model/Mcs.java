@@ -60,7 +60,7 @@ public class Mcs {
                                           aPlaylist[i] = pPlaylist;
                                           pPlaylist.setMyuser(aUser[creatorIndex]);
                                           out=true;
-                                          System.out.println("la playlist PRIVADA "+pPlaylist.getName() +" se ha creado!");
+                                          //System.out.println("la playlist PRIVADA "+pPlaylist.getName() +" se ha creado!");
                                          }
                                      }
                                     break;
@@ -69,7 +69,7 @@ public class Mcs {
                                   if(aPlaylist[i]==null){
                                    aPlaylist[i] = thePlaylist;
                                      out=true;
-                                    System.out.println("la playlist PUBLICA "+thePlaylist.getName()+" ha creado!");
+                                    //System.out.println("la playlist PUBLICA "+thePlaylist.getName()+" ha creado!");
                                        }
                                  }
                                     break;
@@ -79,7 +79,7 @@ public class Mcs {
                                     aPlaylist[i] = rPlaylist;
                                     rPlaylist.setMyUsers(aUser[creatorIndex]);
                                      out=true;
-                                  System.out.println("la playlist RESTRINGIDA "+rPlaylist.getName()+ " se ha creado!");
+                                  //System.out.println("la playlist RESTRINGIDA "+rPlaylist.getName()+ " se ha creado!");
                                             }
                                        }
                              break;
@@ -256,6 +256,7 @@ public class Mcs {
         }
         
     }
+    
      /**
       * Method: addSongToPlaylist <br>
       * this method add song to a playlist and update the duration <br>
@@ -263,16 +264,82 @@ public class Mcs {
       * <b> pos:</b>  A song is added to the array songs[], which belongs to the class Playlist, and the duration of the playlist is set
       * @param pListIndex , the position of the playlist that the user chose
       * @param nameIndex ,  the position of the song that the user chose
+      * @param user , the name of the user for checking is the user has access to the playlist
+      * @param choose , it represents the type of playlist chosen by the user
+      * @return String, telling if the user added the song to the playlist or a message where it says that the user does not have access to that playlist
       */
-     public void addSongToPlaylist(int pListIndex, int nameIndex){
+     public String addSongToPlaylist(int pListIndex, int nameIndex , String user, int choose){
          pListIndex=pListIndex-1;
          nameIndex=nameIndex-1;
-         if(poolOfSongs[nameIndex] !=null){
-            aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
-            aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
-            
+         
+         String message="";
+         Boolean acces=false;
+         Boolean out =false;
+         User theUser=null; 
+         //System.out.println(user);
+         for(int i=0; i<aUser.length && out!=true; i++){
+             if(aUser[i]!=null){
+                 if(((aUser[i]).getNickmane()).equals(user)){
+                      theUser=aUser[i];
+                     out=true;
+                     //System.out.println("Cambio de valor");
+                 }
+             }
+         } 
+         switch(choose){
+             case 1: if(aPlaylist[pListIndex]!=null){
+                        Private_playlist thePlaylist = (Private_playlist)aPlaylist[pListIndex];
+                        System.out.println((thePlaylist.getMyuUser()).getNickmane());
+                                  if(theUser.equals(thePlaylist.getMyuUser())){
+                                    //System.out.println("Check");
+                                     acces=true;
+                                    }            
+                         }         
+                        if(acces==true){
+                            if(poolOfSongs[nameIndex] !=null){
+                              aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
+                              aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
+                              message="¡Cancion añadida a la playlist!";
+                            }
+                          }else{
+                             message="No tienes acceso a esa playlist, ¡por favor selecciona otra!";
+                            }       
+                        break;
+
+              case 3:  if(aPlaylist[pListIndex]!=null){
+                                Restricted_playlist thePlaylist= (Restricted_playlist)aPlaylist[pListIndex];
+                                System.out.println(thePlaylist.myUsersName());
+                                for(int i=0; i<(thePlaylist.getMyUsers()).length && acces!=true; i++){
+                                    if(theUser.equals((thePlaylist.getMyUsers())[i])){
+                                        //System.out.println("Check");
+                                        acces=true;
+                                           }
+                                }
+                                
+                                   }   
+                                
+                                if(acces==true){
+                                    if(poolOfSongs[nameIndex] !=null){
+                                      aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
+                                    aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
+                                      message="¡Cancion añadida a la playlist!";
+                                    }
+                                  }else{
+                                     message="No tienes acceso a esa playlist, ¡por favor selecciona otra!";
+                                    }              
+                                   break;
+
+              default: if(poolOfSongs[nameIndex] !=null){
+                              aPlaylist[pListIndex].setPlaylistDuration(poolOfSongs[nameIndex].getDuration());
+                            aPlaylist[pListIndex].addFromPool(poolOfSongs[nameIndex]);
+                              message="¡Cancion añadida a la playlist!";
+                            }
+                                      
          }
-           
+         
+        
+         
+        return message;
        }  
      
          
@@ -293,7 +360,7 @@ public class Mcs {
         for(int i=0; i<MAX_USERS && out2!=true; i++){
             if(aUser[i]==null){
                 aUser[i]=newUser;
-                System.out.println("el usuario se ha creado");
+                //System.out.println("el usuario se ha creado");
                 out2=true;
             }
         }

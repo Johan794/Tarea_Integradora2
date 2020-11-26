@@ -8,7 +8,7 @@ package model;
  */
 public class Public_playlist extends Playlist {
     public static final int CALCIFICATION =10;
-    private double[] rate= new double[CALCIFICATION];
+    private double[] rate;
 
 
 /**
@@ -18,7 +18,7 @@ public class Public_playlist extends Playlist {
  */
  public Public_playlist( String name){
      super(name);
-     this.rate=rate;
+     rate= new double[CALCIFICATION];;
  }
    
   public void setRate(double aRate){
@@ -40,12 +40,15 @@ public class Public_playlist extends Playlist {
   */
  public double rateAverage(){
      double average=0;
+     int calification=0;
+     
      for(int i=0; i<CALCIFICATION; i++){
          if(rate[i] != 0.0){
              average+=rate[i];
+             calification+=1;
          }
      }
-     return average/CALCIFICATION;
+     return average/calification;
  }
    /**
     * Method: PlaylistToString <br>

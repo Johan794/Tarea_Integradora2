@@ -57,6 +57,10 @@ public class Restricted_playlist extends Playlist{
        return names; 
     }
 
+    public User[] getMyUsers(){
+        return myUsers;
+    }
+
 
 
     /**
