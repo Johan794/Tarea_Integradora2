@@ -8,7 +8,7 @@ package model;
  */
 public class Restricted_playlist extends Playlist{
     public static final int ACCESS= 5;
-    private User []myUsers= new User[ACCESS];
+    private User []myUsers;
 
     /**
      * Constructor of the object Private_playlist <br>
@@ -18,7 +18,7 @@ public class Restricted_playlist extends Playlist{
 
     public Restricted_playlist(String name){
         super(name);
-        this.myUsers=myUsers;
+        myUsers=new User[ACCESS];
 
     }
   
