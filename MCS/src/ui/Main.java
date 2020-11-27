@@ -137,9 +137,15 @@ public class Main{
                case 7: //sc.nextLine();
                        int desition;
                        int pListIndex, nameIndex;
-                       String user;
+                       String user , songs;
                        do{
-                        System.out.println(myMcs.songToChoose());
+                        songs=myMcs.songToChoose();
+                        if(songs.equals("No hay canciones")){
+                            System.out.println(songs);
+
+                        }else{
+                            System.out.println(songs);
+                        
                         System.out.println("Ingrese el numero de la cancion que quiere agregar");   
                                      nameIndex=sc.nextInt();
                          System.out.println( "¿A que tipo de playlist va a agregar la cancion? \n"+
@@ -155,8 +161,10 @@ public class Main{
                         System.out.println("para continuar por favor confirme su Nickname");
                                      user=sc.nextLine();
                            System.out.println(myMcs.addSongToPlaylist(pListIndex, nameIndex, user, choose));                
-                         System.out.println("¿Desea añadir otra cancion a una playlist? 1 = si o 0 = no");
-                                 desition=sc.nextInt();
+                        }  
+                    System.out.println("¿Desea añadir otra cancion a una playlist? 1 = si o 0 = no");
+                        desition=sc.nextInt();
+                        
                        }while(desition==1);
                        
                         break;
