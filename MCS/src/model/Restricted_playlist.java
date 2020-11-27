@@ -4,7 +4,7 @@ package model;
  * description of class Restricted_playlist
  *it extends the class Playlist and its methods. This class shows the users with access to this kind of playlist
  * @author Johan Ricardo
- * @version 
+ * @version final
  */
 public class Restricted_playlist extends Playlist{
     public static final int ACCESS= 5;
@@ -40,7 +40,6 @@ public class Restricted_playlist extends Playlist{
      * <b> pos: <br>
      * @return String with the names of the user in the array myUsers[]
      */
-
     public String myUsersName(){
         String names="";
         for(int i=0; i<myUsers.length; i++){
