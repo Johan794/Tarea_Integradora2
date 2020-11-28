@@ -7,7 +7,7 @@ package model;
  * @version 
  */
 public class Public_playlist extends Playlist {
-    public static final int CALCIFICATION =10;
+    public static final int CALCIFICATION =100;
     private double[] rate;
 
 
