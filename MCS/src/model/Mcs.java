@@ -383,6 +383,9 @@ public class Mcs {
             currentPlaylist+=aPlaylist[i].playlistToString()+"\n";
            }
         }
+        if(currentPlaylist.equals("")){
+           currentPlaylist="No hay playlists creadas\n";
+        }
           return currentPlaylist;
     }
     /**
